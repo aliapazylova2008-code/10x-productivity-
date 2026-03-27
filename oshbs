@@ -1,0 +1,363 @@
+# 10X Продуктивность Предпринимателя - Полный исходный код
+
+## 📋 Обзор проекта
+
+Это премиум лендинг-страница для практикума "10X Продуктивность Предпринимателя" на React + TypeScript + Tailwind CSS.
+
+**Технологический стек:**
+- React 19 + TypeScript
+- Tailwind CSS 4 + shadcn/ui
+- Vite (сборщик)
+- Wouter (маршрутизация)
+- Framer Motion (анимации)
+- Express.js (сервер)
+
+---
+
+## 🗂️ Структура проекта
+
+```
+10x-productivity-landing/
+├── client/                          # Frontend приложение
+│   ├── index.html                  # HTML точка входа
+│   ├── public/
+│   │   └── favicon.ico
+│   └── src/
+│       ├── main.tsx                # React entry point
+│       ├── App.tsx                 # Главный компонент и маршруты
+│       ├── index.css               # Глобальные стили и переменные
+│       ├── pages/
+│       │   ├── Home.tsx            # Главная страница (11 блоков)
+│       │   └── NotFound.tsx        # 404 страница
+│       ├── components/
+│       │   ├── AnimatedText.tsx    # Компонент анимированного текста
+│       │   ├── ScrollReveal.tsx    # Scroll-reveal анимация
+│       │   ├── WaveBackground.tsx  # Волновой фон
+│       │   ├── TestimonialsSection.tsx # Отзывы участников
+│       │   ├── ErrorBoundary.tsx   # Error boundary
+│       │   ├── ManusDialog.tsx     # Диалоговое окно
+│       │   ├── Map.tsx             # Google Maps интеграция
+│       │   └── ui/                 # shadcn/ui компоненты
+│       ├── contexts/
+│       │   └── ThemeContext.tsx    # Контекст темы
+│       ├── hooks/                  # Кастомные хуки
+│       └── lib/                    # Утилиты
+├── server/
+│   └── index.ts                    # Express сервер
+├── shared/
+│   └── const.ts                    # Общие константы
+├── package.json                    # Зависимости
+├── vite.config.ts                  # Vite конфигурация
+├── tsconfig.json                   # TypeScript конфигурация
+├── tailwind.config.ts              # Tailwind конфигурация
+└── postcss.config.js               # PostCSS конфигурация
+```
+
+---
+
+## 🎨 Ключевые компоненты
+
+### 1. **Home.tsx** - Главная страница (11 блоков)
+
+```typescript
+// Основная структура:
+// 1. Hero секция - заголовок, подзаголовок, CTA
+// 2. Проблемы - "Узнаёшь себя?"
+// 3. Роли - Делатель, Редактор, Множитель
+// 4. Матрица - Усилия vs Результаты
+// 5. Сигнал vs Шум - 90% vs 10%
+// 6. Управление энергией - Расходует vs Заряжает
+// 7. Состояние потока - Flow state
+// 8. Система дня - Daily system
+// 9. Отзывы участников ⭐ (новое)
+// 10. Ключевая идея - Идея → Действие → Результат
+// 11. Финальный CTA - Действуй сейчас
+```
+
+**Интеграция WhatsApp:**
+```typescript
+const whatsappLink = 'https://wa.me/996777111022?text=Здравствуйте!%20Я%20хочу%20записаться%20на%20практикум%2010X%20Продуктивность%20Предпринимателя';
+```
+
+### 2. **TestimonialsSection.tsx** - Отзывы участников
+
+Компонент отображает:
+- 4 отзыва с 5-звёздочными рейтингами
+- Информацию об авторах (имя, роль, аватар)
+- Доверительные значки (150+ участников, 4.9★, 92%)
+- Плавные scroll-reveal анимации
+
+```typescript
+const testimonials = [
+  {
+    name: 'Айтек Абдулаев',
+    role: 'Предприниматель, IT сектор',
+    quote: 'Практикум полностью изменил мой подход...',
+    avatar: '👨‍💼',
+    rating: 5,
+  },
+  // ... ещё 3 отзыва
+];
+```
+
+### 3. **WaveBackground.tsx** - Волновой фон
+
+CSS-анимированный волновой фон с:
+- Тремя слоями волн с разными скоростями
+- Shimmer эффектом
+- Градиентом от белого к серому
+- Blur фильтром для мягкости
+
+```typescript
+// Анимации:
+// - wave1: 8s
+// - wave2: 10s (задержка -2s)
+// - wave3: 12s (задержка -4s)
+// - shimmerPulse: 6s
+```
+
+### 4. **ScrollReveal.tsx** - Scroll-reveal анимация
+
+Компонент использует Intersection Observer для:
+- Отслеживания видимости элемента
+- Запуска анимации при входе в viewport
+- Поддержки задержек анимации
+
+```typescript
+interface ScrollRevealProps {
+  children: React.ReactNode;
+  delay?: number;      // Задержка в миллисекундах
+  className?: string;  // Дополнительные классы
+}
+```
+
+### 5. **AnimatedText.tsx** - Анимированный текст
+
+Компонент для анимирования текста:
+- Letter-spacing анимация
+- Поддержка каллиграфического шрифта
+- Scroll-triggered reveal
+
+```typescript
+interface AnimatedTextProps {
+  text: string;
+  delay?: number;
+  className?: string;
+  isCalligraphic?: boolean;
+}
+```
+
+---
+
+## 🎨 Цветовая палитра
+
+```css
+/* Основные цвета */
+--primary: #1a3a52;        /* Темно-синий */
+--accent: #d4af37;         /* Золото */
+--secondary: #6b2c3e;      /* Бордовый */
+
+/* Нейтральные */
+--foreground: #2a2a2a;     /* Темный текст */
+--muted-foreground: #666666; /* Серый текст */
+--background: #ffffff;     /* Белый фон */
+--secondary: #f5f5f5;      /* Светло-серый */
+```
+
+---
+
+## 📝 Типография
+
+**Google Fonts:**
+```html
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Caveat:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+```
+
+**Использование:**
+- **Playfair Display** - Заголовки (h1, h2, h3)
+- **Caveat** - Каллиграфические элементы
+- **Inter** - Основной текст
+
+---
+
+## 🚀 Запуск проекта
+
+### Установка зависимостей
+```bash
+pnpm install
+```
+
+### Разработка
+```bash
+pnpm dev
+# Откроется на http://localhost:3000
+```
+
+### Сборка
+```bash
+pnpm build
+```
+
+### Продакшн
+```bash
+pnpm start
+```
+
+---
+
+## 📱 Адаптивность
+
+Все компоненты полностью адаптивны с использованием Tailwind breakpoints:
+
+```css
+/* Мобильные */
+@media (max-width: 640px) { ... }
+
+/* Планшеты */
+@media (min-width: 768px) { ... }
+
+/* Десктоп */
+@media (min-width: 1024px) { ... }
+```
+
+---
+
+## 🎬 Анимации
+
+### Scroll-reveal
+```css
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+```
+
+### Letter-spacing
+```css
+@keyframes letterSpacing {
+  from {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  to {
+    letter-spacing: 0;
+    opacity: 1;
+  }
+}
+```
+
+### Wave animations
+```css
+@keyframes wave1 {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(50px) translateY(-20px); }
+}
+```
+
+---
+
+## 🔗 Интеграции
+
+### WhatsApp
+```typescript
+const whatsappLink = 'https://wa.me/996777111022?text=...';
+<a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+  <Button>ЗАПИСАТЬСЯ НА ПРАКТИКУМ</Button>
+</a>
+```
+
+### Google Fonts
+```html
+<link href="https://fonts.googleapis.com/css2?family=..." rel="stylesheet" />
+```
+
+---
+
+## 📊 Производительность
+
+- **Минимальные зависимости** - Только необходимые пакеты
+- **Оптимизированные анимации** - CSS вместо JavaScript
+- **Lazy loading** - Готово к использованию
+- **SEO-friendly** - Семантический HTML
+
+---
+
+## 🔧 Конфигурация
+
+### vite.config.ts
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': '/client/src',
+    },
+  },
+});
+```
+
+### tailwind.config.ts
+```typescript
+export default {
+  content: ['./client/src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: '#1a3a52',
+        accent: '#d4af37',
+        secondary: '#6b2c3e',
+      },
+    },
+  },
+};
+```
+
+---
+
+## 📦 Основные зависимости
+
+```json
+{
+  "react": "^19.2.1",
+  "react-dom": "^19.2.1",
+  "typescript": "5.6.3",
+  "tailwindcss": "^4.1.14",
+  "@radix-ui/*": "latest",
+  "framer-motion": "^12.23.22",
+  "lucide-react": "^0.453.0",
+  "wouter": "^3.3.5",
+  "axios": "^1.12.0",
+  "sonner": "^2.0.7"
+}
+```
+
+---
+
+## 🎯 Следующие шаги
+
+1. **Email подписка** - Добавить форму для сбора контактов
+2. **Счётчик обратного отсчёта** - Таймер до начала практикума
+3. **FAQ раздел** - Ответы на частые вопросы
+4. **Analytics** - Интеграция с Google Analytics
+5. **SEO оптимизация** - Meta теги, Open Graph
+
+---
+
+## 📄 Лицензия
+
+MIT
+
+---
+
+## 👨‍💻 Разработано
+
+Создано с помощью Manus AI для Osh Business School
